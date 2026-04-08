@@ -1,0 +1,10 @@
+FROM ubuntu:latest
+RUN apt-get update && apt-get install -y nodejs npm
+WORKDIR /user-contract
+RUN rm -rf ./*
+COPY package*.json /user-contract/
+RUN npm install
+COPY src /user-contract/src/
+COPY hp.cfg.override /user-contract/
+COPY .env /user-contract/
+RUN npm run buildLinux
